@@ -8,17 +8,8 @@ class LibraryController < ApplicationController
     render json: @content
   end
 
-  # An endpoint to return the seasons ordered by creation, including the list of episodes ordered by its number.
-  def seasons_info
-    @content = []
-    seasons = Season.all.order(created_at: :desc)
-    seasons.each do |season|
-      debugger
-      @content << [season]
-      season.episodes.order(number: :asc).each do |episode|
-        @content[-1] << episode
-      end
-    end
+  def index
+    @content = (Movie.all + Season.all).sort_by(&:created_at)
 
     render json: @content
   end
