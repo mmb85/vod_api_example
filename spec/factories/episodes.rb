@@ -15,6 +15,7 @@ FactoryBot.define do
   factory :episode do
     title { "MyString" }
     plot { "MyString" }
-    season { nil }
+    number { 1 }
+    season
   end
 end

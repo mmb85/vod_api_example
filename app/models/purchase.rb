@@ -21,21 +21,20 @@ class Purchase < ApplicationRecord
 
   validates_presence_of :price, :quality
 
-  validate :id_type
+  validate :purchase_type_must_be_uniq
   validates :movie_id, presence: true,  unless: -> (purchase) { purchase.season_id.present? }
+  validates_uniqueness_of :movie, scope: %i[user quality], message: 'Movie is available in your library', if: -> (purchase) { purchase.movie_id.present? }
   validates :season_id, presence: true, unless: -> (purchase) { purchase.movie_id.present? }
+  validates_uniqueness_of :season, scope: %i[season quality], message: 'Season is available in your library', if: -> (purchase) { purchase.season_id.present? }
 
 private
-  def id_type
+  def purchase_type_must_be_uniq
     if season_id && movie_id
       errors.add(:movie_id, 'season_id is present too')
       errors.add(:season_id, 'movie_id is present too')
     end
   end
 end
-
-
-
 
 # def remaining_time(purchase_id)
 #   purchase = Purchase.find purchase_id

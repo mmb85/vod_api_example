@@ -13,5 +13,9 @@
 require 'rails_helper'
 
 RSpec.describe Season, type: :model do
-  pending "add some examples to (or delete) #{__FILE__}"
+  describe 'associations' do
+    it { should have_many(:purchases) }
+    it { should have_many(:users).through(:purchases) }
+    it { should have_many(:episodes).dependent(:destroy) }
+  end
 end
