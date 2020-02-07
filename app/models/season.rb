@@ -13,5 +13,5 @@
 class Season < ApplicationRecord
   has_many :purchases
   has_many :users, through: :purchases
-  has_many :episodes, dependent: :destroy
+  has_many :episodes, ->{ order(number: :asc) }, dependent: :destroy
 end

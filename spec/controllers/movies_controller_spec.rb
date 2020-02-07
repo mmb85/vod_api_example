@@ -42,20 +42,45 @@ RSpec.describe MoviesController, type: :controller do
   let(:valid_session) { {} }
 
   describe "GET #index" do
+    let!(:movie) {create :movie}
+
     it "returns a success response" do
-      movie = Movie.create! valid_attributes
-      get :index, params: {}, session: valid_session
+      get :index, params: {}
       expect(response).to be_successful
     end
   end
 
   describe "GET #show" do
+    let!(:movie) {create :movie}
     it "returns a success response" do
-      movie = Movie.create! valid_attributes
-      get :show, params: {id: movie.to_param}, session: valid_session
+      get :show, params: {id: movie.id}
       expect(response).to be_successful
     end
   end
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
   describe "POST #create" do
     context "with valid params" do

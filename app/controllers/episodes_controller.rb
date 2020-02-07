@@ -5,12 +5,12 @@ class EpisodesController < ApplicationController
   def index
     @episodes = Episode.all
 
-    render json: @episodes
+    render json: @episodes.to_json
   end
 
   # GET /episodes/1
   def show
-    render json: @episode
+    render json: @episode.to_json
   end
 
   # POST /episodes
