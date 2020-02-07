@@ -2,7 +2,9 @@ Rails.application.routes.draw do
   resources :episodes
   resources :seasons
   resources :movies
-  resources :users
+  resources :users do
+    get :purchases, on: :member
+  end
   resources :purchases
   resources :library do
     get :movies, on: :collection

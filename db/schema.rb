@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_02_06_161136) do
+ActiveRecord::Schema.define(version: 2020_02_07_142536) do
 
   create_table "episodes", force: :cascade do |t|
     t.string "title", null: false
@@ -37,6 +37,7 @@ ActiveRecord::Schema.define(version: 2020_02_06_161136) do
     t.integer "quality", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.boolean "expired", default: false
     t.index ["movie_id"], name: "index_purchases_on_movie_id"
     t.index ["season_id"], name: "index_purchases_on_season_id"
     t.index ["user_id"], name: "index_purchases_on_user_id"
