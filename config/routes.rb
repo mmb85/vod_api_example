@@ -1,4 +1,11 @@
 Rails.application.routes.draw do
-  # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
-    resources :users
+  resources :episodes
+  resources :seasons
+  resources :movies
+  resources :users
+  resources :purchases
+  resources :library do
+    get :movies, on: :collection
+    get :seasons_info, on: :collection
+  end
 end
