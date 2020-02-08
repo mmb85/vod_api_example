@@ -1,7 +1,7 @@
 class PurchasesController < ApplicationController
   before_action :set_purchase, only: [:show, :update, :destroy]
 
-  EXPIRATION_DATE = Time.now - 3.minutes
+  EXPIRATION_DATE = Time.now - 3.days
 
   # GET /purchases
   def index

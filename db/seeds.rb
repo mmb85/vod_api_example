@@ -20,3 +20,9 @@ Purchase.create(movie_id: Movie.third.id, user_id: User.first.id, price:  "%.2f"
 Purchase.create(movie_id: Movie.second.id, user_id: User.first.id, price:  "%.2f" % (rand * (max-min) + min), quality: 'SD')
 # User buy the movie with 2 different qualities, permited
 Purchase.create(movie_id: Movie.second.id, user_id: User.first.id, price:  "%.2f" % (rand * (max-min) + min), quality: 1)
+
+Purchase.create(season_id: Season.first.id, user_id: User.second.id, price:  "%.2f" % (rand * (max-min) + min), quality: 'HD')
+
+Purchase.create(season_id: Season.first.id, user_id: User.third.id, price:  "%.2f" % (rand * (max-min) + min), quality: 'HD')
+
+Purchase.create(season_id: Season.first.id, user_id: User.second.id, price:  "%.2f" % (rand * (max-min) + min), quality: 'SD')
