@@ -10,6 +10,7 @@
 #  quality    :integer          not null
 #  created_at :datetime         not null
 #  updated_at :datetime         not null
+#  expired    :boolean          default(FALSE)
 #
 
 class Purchase < ApplicationRecord
@@ -19,7 +20,7 @@ class Purchase < ApplicationRecord
 
   enum quality: %i(SD HD)
 
-  validates_presence_of :price, :quality
+  validates_presence_of :price, :quality, :user
 
   validate :purchase_type_must_be_uniq
   validates :movie_id, presence: true,  unless: -> (purchase) { purchase.season_id.present? }

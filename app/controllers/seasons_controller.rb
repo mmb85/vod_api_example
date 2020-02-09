@@ -46,6 +46,6 @@ class SeasonsController < ApplicationController
 
     # Only allow a trusted parameter "white list" through.
     def season_params
-      params.require(:season).permit(:title, :plot, :number)
+      params.permit(:title, :plot, :number)
     end
 end

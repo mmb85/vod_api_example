@@ -10,11 +10,13 @@ Season.find_each do |season|
 end
 
 Season.find_each do |season|
-  (1..8).each { |num| Episode.create(title: Faker::Book.unique.title, season_id: season.id, number: num) }
+  (1..rand(4..13)).each { |num| Episode.create(title: Faker::Book.unique.title, plot: Faker::Movie.quote, season_id: season.id, number: num) }
 end
 
+#Price generated dinamically
 max = 12.99
 min = 2.99
+
 Purchase.create(movie_id: Movie.second.id, user_id: User.second.id, price:  "%.2f" % (rand * (max-min) + min), quality: 'HD')
 Purchase.create(movie_id: Movie.third.id, user_id: User.first.id, price:  "%.2f" % (rand * (max-min) + min), quality: 0)
 Purchase.create(movie_id: Movie.second.id, user_id: User.first.id, price:  "%.2f" % (rand * (max-min) + min), quality: 'SD')

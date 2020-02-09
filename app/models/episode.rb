@@ -15,12 +15,4 @@ class Episode < ApplicationRecord
   belongs_to :season
 
   validates_presence_of :title, :number, :season
-  #validate :uniq_per_season
-
-private
-  def uniq_per_season
-    if self.class.where(title: self.title, season_id: self.season_id) > 0
-      errors.add(:title, 'Title episode must be unique per Season')
-    end
-  end
 end

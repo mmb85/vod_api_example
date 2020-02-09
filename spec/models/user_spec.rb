@@ -3,7 +3,7 @@
 # Table name: users
 #
 #  id         :integer          not null, primary key
-#  email      :string           not null
+#  email      :string
 #  created_at :datetime         not null
 #  updated_at :datetime         not null
 #
@@ -20,10 +20,8 @@ RSpec.describe User, type: :model do
   describe 'validations' do
     subject { User.new(email: 'fake@email.com') }
     it { should validate_uniqueness_of(:email) }
+    it { should validate_presence_of(:email) }
   end
-
-
-
 
   # TODO MOVE TO CONTROLLER SPEC
   describe 'default user details' do

@@ -45,24 +45,14 @@ class UsersController < ApplicationController
     render json: purchases
   end
 
-  private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_user
-      @user = User.find(params[:id])
-    end
+private
+  # Use callbacks to share common setup or constraints between actions.
+  def set_user
+    @user = User.find(params[:id])
+  end
 
-    # Only allow a trusted parameter "white list" through.
-    def user_params
-      params.fetch(:user, {})
-    end
-
-    # TODO Not used yet, maybe good idea to add to purchase as a string column
-    def remaining_time(purchase_id)
-      purchase = Purchase.find purchase_id
-      total_seconds = ((purchase.created_at + 3.days - Time.now)).to_i
-      hours = (total_seconds/ 3600).to_i
-      minutes = ((total_seconds % 3600) / 60).to_i
-      seconds = ((total_seconds % 3600) % 60).to_i
-      puts "#{"%.2d" % hours}:#{"%.2d" % minutes}:#{"%.2d" % seconds}"
-    end
+  # Only allow a trusted parameter "white list" through.
+  def user_params
+    params.permit(:email)
+  end
 end

@@ -23,11 +23,6 @@ RSpec.describe Movie, type: :model do
     it { should validate_presence_of(:title) }
   end
 
-
-
-
-
-
   describe 'default movie details' do
     let!(:movie) { create :movie }
 

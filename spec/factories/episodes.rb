@@ -13,7 +13,7 @@
 
 FactoryBot.define do
   factory :episode do
-    title { "MyString" }
+    title { Faker::Book.unique.title }
     plot { "MyString" }
     number { 1 }
     season
