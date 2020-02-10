@@ -3,9 +3,12 @@ class EpisodesController < ApplicationController
 
   # GET /episodes
   def index
-    @episodes = Episode.all
+    episodes = Episode.all
+    json =  Rails.cache.fetch(Episode.cache_key(episodes)) do
+      episodes.to_json
+    end
 
-    render json: @episodes.to_json
+    render json: json
   end
 
   # GET /episodes/1
@@ -18,7 +21,7 @@ class EpisodesController < ApplicationController
     @episode = Episode.new(episode_params)
 
     if @episode.save
-      render json: @episode, status: :created, location: @episode
+      render json: @episode.to_json, status: :created, location: @episode
     else
       render json: @episode.errors, status: :unprocessable_entity
     end
@@ -27,7 +30,7 @@ class EpisodesController < ApplicationController
   # PATCH/PUT /episodes/1
   def update
     if @episode.update(episode_params)
-      render json: @episode
+      render json: @episode.to_json
     else
       render json: @episode.errors, status: :unprocessable_entity
     end

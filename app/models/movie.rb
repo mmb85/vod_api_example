@@ -15,4 +15,19 @@ class Movie < ApplicationRecord
 
   validates_uniqueness_of :title
   validates_presence_of :title
+
+  after_commit :create_json_cache
+
+  def self.cache_key(movies)
+    {
+      serializer: 'movies',
+      stat_record: movies.maximum(:updated_at)
+    }
+  end
+
+  private
+
+  def create_json_cache
+    CreateMoviesJsonCacheJob.perform_later
+  end
 end

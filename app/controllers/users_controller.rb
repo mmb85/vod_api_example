@@ -10,7 +10,7 @@ class UsersController < ApplicationController
 
   # GET /users/1
   def show
-    render json: @user
+    render json: @user.to_json
   end
 
   # POST /users
@@ -27,7 +27,7 @@ class UsersController < ApplicationController
   # PATCH/PUT /users/1
   def update
     if @user.update(user_params)
-      render json: @user
+      render json: @user.to_json
     else
       render json: @user.errors, status: :unprocessable_entity
     end
@@ -42,7 +42,7 @@ class UsersController < ApplicationController
   def purchases
     purchases = @user.purchases.where(expired: false).order('created_at DESC')
 
-    render json: purchases
+    render json: purchases.to_json
   end
 
 private

@@ -2,12 +2,6 @@ class LibraryController < ApplicationController
   before_action :set_library, only: [:show, :update, :destroy]
 
   # GET /libraries
-  def movies
-    @content = Movie.all.order(created_at: :desc)
-
-    render json: @content
-  end
-
   def index
     @content = (Movie.all + Season.all).sort_by(&:created_at)
 
@@ -16,7 +10,7 @@ class LibraryController < ApplicationController
 
   # GET /libraries/1
   def show
-    render json: @library
+    render json: @library.to_json
   end
 
   # POST /libraries
@@ -33,7 +27,7 @@ class LibraryController < ApplicationController
   # PATCH/PUT /libraries/1
   def update
     if @library.update(library_params)
-      render json: @library
+      render json: @library.to_json
     else
       render json: @library.errors, status: :unprocessable_entity
     end

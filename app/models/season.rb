@@ -17,4 +17,20 @@ class Season < ApplicationRecord
 
   validates_presence_of :title
   validates_presence_of :number
+
+  after_commit :create_json_cache
+  after_save :create_json_cache
+
+  def self.cache_key(seasons)
+    {
+      serializer: 'seasons',
+      stat_record: seasons.maximum(:updated_at)
+    }
+  end
+
+  private
+
+  def create_json_cache
+    CreateSeasonsJsonCacheJob.perform_later
+  end
 end

@@ -3,22 +3,25 @@ class SeasonsController < ApplicationController
 
   # GET /seasons
   def index
-    @seasons = Season.all
+    seasons = Season.includes(:episodes)
+    json = Rails.cache.fetch(Season.cache_key(seasons)) do
+      seasons.to_json(include: :episodes)
+    end
 
-    render json: @seasons
+    render json: json
   end
 
   # GET /seasons/1
   def show
-    render json: @season
+    render json: @season.to_json
   end
 
-  # POST /seasons
+  # Season /seasons
   def create
     @season = Season.new(season_params)
 
     if @season.save
-      render json: @season, status: :created, location: @season
+      render json: @season.to_json, status: :created, location: @season
     else
       render json: @season.errors, status: :unprocessable_entity
     end
@@ -27,7 +30,7 @@ class SeasonsController < ApplicationController
   # PATCH/PUT /seasons/1
   def update
     if @season.update(season_params)
-      render json: @season
+      render json: @season.to_json
     else
       render json: @season.errors, status: :unprocessable_entity
     end

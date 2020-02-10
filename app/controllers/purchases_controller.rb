@@ -5,16 +5,22 @@ class PurchasesController < ApplicationController
 
   # GET /purchases
   def index
-    @purchases = Purchase.all
-    @purchases.where("created_at  < ?", EXPIRATION_DATE).update_all(expired: true)
+    purchases = Purchase.all
+    json =  Rails.cache.fetch(Purchase.cache_key(purchases)) do
+      purchases.to_json
+    end
 
-    render json: @purchases
+    render json: json
+  #  @purchases = Purchase.all
+  #  @purchases.where("created_at  < ?", EXPIRATION_DATE).update_all(expired: true)
+
+  #  render json: @purchases
   end
 
   # GET /purchases/1
   def show
     @purchase.update_attribute(expired: true) if @purchase.created_at < EXPIRATION_DATE
-    render json: @purchase
+    render json: @purchase.to_json
   end
 
   # POST /purchases
@@ -24,7 +30,7 @@ class PurchasesController < ApplicationController
     if @purchase.save
       render json: @purchase.to_json, status: :created, location: @purchase
     else
-      render json: @purchase.errors.to_json, status: :unprocessable_entity
+      render json: @purchase.errors, status: :unprocessable_entity
     end
   end
 
@@ -32,7 +38,7 @@ class PurchasesController < ApplicationController
   def update
     if @purchase.update(purchase_params)
       @purchase.update_attribute(expired: true) if @purchase.created_at < EXPIRATION_DATE
-      render json: @purchase
+      render json: @purchase.to_json
     else
       render json: @purchase.errors, status: :unprocessable_entity
     end
@@ -41,6 +47,10 @@ class PurchasesController < ApplicationController
   # DELETE /purchases/1
   def destroy
     @purchase.destroy
+  end
+
+  def purchase
+    create
   end
 
   private
