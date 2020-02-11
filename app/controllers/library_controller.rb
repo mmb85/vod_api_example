@@ -3,9 +3,9 @@ class LibraryController < ApplicationController
 
   # GET /libraries
   def index
-    @content = (Movie.all + Season.all).sort_by(&:created_at)
+    @content = (Movie.all + Season.all).sort_by(&:created_at).reverse
 
-    render json: @content
+    render json: @content.to_json
   end
 
   # GET /libraries/1

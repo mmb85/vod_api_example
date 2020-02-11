@@ -41,8 +41,8 @@ private
 
   def purchase_type_must_be_uniq
     if season_id && movie_id
-      errors.add(:movie_id, 'season_id is present too.')
-      errors.add(:season_id, 'movie_id is present too.')
+      errors.add(:movie_id, 'season_id is present too')
+      errors.add(:season_id, 'movie_id is present too')
     end
   end
 

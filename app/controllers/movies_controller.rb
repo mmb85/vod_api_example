@@ -3,7 +3,7 @@ class MoviesController < ApplicationController
 
   # GET /movies
   def index
-    movies = Movie.all
+    movies = Movie.all.order(created_at: :desc)
     json =  Rails.cache.fetch(Movie.cache_key(movies)) do
       movies.to_json
     end
@@ -48,7 +48,6 @@ class MoviesController < ApplicationController
 
     # Only allow a trusted parameter "white list" through.
     def movie_params
-      params.permit(:title, :plot)
-      # params.require(:movie).permit(:title, :plot)
+      params.permit(:title, :plot, :library_id)
     end
 end

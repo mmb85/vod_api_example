@@ -2,7 +2,7 @@ class CreatePurchasesJsonCacheJob < ApplicationJob
   queue_as :default
 
   def perform(*_args)
-    purchases = Purchase.where(user_id: self.user_id)
+    purchases = Purchase.all
 
     Rails.cache.delete(Purchase.cache_key(purchases))
 

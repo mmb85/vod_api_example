@@ -3,7 +3,7 @@ class SeasonsController < ApplicationController
 
   # GET /seasons
   def index
-    seasons = Season.includes(:episodes)
+    seasons = Season.all.order(created_at: :desc).includes(:episodes)
     json = Rails.cache.fetch(Season.cache_key(seasons)) do
       seasons.to_json(include: :episodes)
     end

@@ -21,7 +21,7 @@ class Episode < ApplicationRecord
 
   after_commit :create_json_cache
 
-  def self.cache_key(posts)
+  def self.cache_key(episodes)
     {
       serializer: 'episodes',
       stat_record: Episode.maximum(:updated_at)
@@ -31,13 +31,6 @@ class Episode < ApplicationRecord
   private
 
   def create_json_cache
-    episodes = Episode.all
-
-    Rails.cache.delete(Episode.cache_key(episodes))
-
-    Rails.cache.fetch(Episode.cache_key(episodes)) do
-      episodes.to_json
-    end
-    # CreatepisodesJsonCacheJob.perform_later
+    CreateEpisodesJsonCacheJob.perform_later
   end
 end

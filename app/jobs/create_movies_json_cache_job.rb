@@ -2,7 +2,7 @@ class CreateMoviesJsonCacheJob < ApplicationJob
   queue_as :default
 
   def perform(*_args)
-    movies = Movie.all
+    movies = Movie.all.order(created_at: :desc)
 
     Rails.cache.delete(Movie.cache_key(movies))
 

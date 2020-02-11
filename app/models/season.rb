@@ -14,12 +14,11 @@ class Season < ApplicationRecord
   has_many :purchases
   has_many :users, through: :purchases
   has_many :episodes, ->{ order(number: :asc) }, dependent: :destroy
-
+  
   validates_presence_of :title
   validates_presence_of :number
 
   after_commit :create_json_cache
-  after_save :create_json_cache
 
   def self.cache_key(seasons)
     {

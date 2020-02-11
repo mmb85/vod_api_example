@@ -21,7 +21,7 @@ class Movie < ApplicationRecord
   def self.cache_key(movies)
     {
       serializer: 'movies',
-      stat_record: movies.maximum(:updated_at)
+      stat_record: Movie.maximum(:updated_at)
     }
   end
 

@@ -3,7 +3,7 @@ class EpisodesController < ApplicationController
 
   # GET /episodes
   def index
-    episodes = Episode.all
+    episodes = Episode.all.order("number ASC")
     json =  Rails.cache.fetch(Episode.cache_key(episodes)) do
       episodes.to_json
     end
