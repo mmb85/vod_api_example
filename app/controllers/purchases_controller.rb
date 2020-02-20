@@ -11,10 +11,6 @@ class PurchasesController < ApplicationController
     end
 
     render json: json
-  #  @purchases = Purchase.all
-  #  @purchases.where("created_at  < ?", EXPIRATION_DATE).update_all(expired: true)
-
-  #  render json: @purchases
   end
 
   # GET /purchases/1

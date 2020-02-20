@@ -40,10 +40,8 @@ class UsersController < ApplicationController
 
   # GET /users/1/purchases
   def purchases
+    expire_purchases
     purchases = @user.purchases.where(expired: false).order('created_at DESC')
-    json =  Rails.cache.fetch(User.cache_key(purchases)) do
-      purchases.to_json
-    end
 
     render json: purchases.to_json
   end
@@ -57,5 +55,10 @@ private
   # Only allow a trusted parameter "white list" through.
   def user_params
     params.permit(:email)
+  end
+
+  def expire_purchases
+    to_be_expired = @user.purchases.where("created_at < ?", PurchasesController::EXPIRATION_DATE).where(expired: false)
+    to_be_expired.update_all(expired: true) if to_be_expired.any?
   end
 end
